@@ -4,6 +4,7 @@ import 'package:evently/providers/app_theme_provider.dart';
 import 'package:evently/ui/home/home_screen.dart';
 import 'package:evently/ui/login/login_Screen.dart';
 import 'package:evently/ui/onboarding/onboarding_tabs.dart';
+import 'package:evently/ui/register/register_Screen.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.onboardingRouteName: (context) => OnBoardingPage(),
         AppRoutes.homeRouteName: (context) => HomeScreen(),
         AppRoutes.loginRouteName: (context) => LoginScreen(),
+        AppRoutes.registerRouteName: (context) => RegisterScreen(),
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

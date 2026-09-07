@@ -3,12 +3,11 @@ import 'package:evently/ui/widgets/custom_text_form_field.dart';
 import 'package:evently/ui/widgets/elevated_button_reuse.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
-import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_utilz.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +24,18 @@ class LoginScreen extends StatelessWidget {
             children: [
               Image.asset(AppAssets.onBoardLogo),
               Text(
-                AppLocalizations.of(context)!.login_account,
+                AppLocalizations.of(context)!.create_account,
                 style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              // name
+              CustomTextFormField(
+                borderColor: Theme.of(context).highlightColor,
+                hinttext: AppLocalizations.of(context)!.enter_name,
+                hintstyle: Theme.of(context).textTheme.bodyLarge,
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  color: AppColors.lightGrey,
+                ),
               ),
               // email textField form
               CustomTextFormField(
@@ -53,26 +62,26 @@ class LoginScreen extends StatelessWidget {
                   color: AppColors.lightGrey,
                 ),
               ),
-              // forget Password
-              Container(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    // navigte to reset password
-                  },
-                  child: Text(
-                    '${AppLocalizations.of(context)!.forget_password} ?',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: Theme.of(context).dividerColor,
-                    ),
-                  ),
+              // re enter password
+              CustomTextFormField(
+                style: Theme.of(context).textTheme.bodySmall,
+                borderColor: Theme.of(context).highlightColor,
+                hinttext: AppLocalizations.of(context)!.confirm_password,
+                hintstyle: Theme.of(context).textTheme.bodyLarge,
+                prefixIcon: Icon(
+                  Icons.lock_open_outlined,
+                  color: AppColors.lightGrey,
+                ),
+                sufixIcon: Icon(
+                  Icons.visibility_off_outlined,
+                  color: AppColors.lightGrey,
                 ),
               ),
+
               // login button
               ElevatedButtonReuse(
                 ChildType: Text(
-                  AppLocalizations.of(context)!.login,
+                  AppLocalizations.of(context)!.create_account,
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 onpressed: () {},
@@ -82,17 +91,16 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: .center,
                 children: [
                   Text(
-                    ' ${AppLocalizations.of(context)!.dont_have_account} ',
+                    ' ${AppLocalizations.of(context)!.alreay_account} ',
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   TextButton(
                     onPressed: () {
                       // navigte to sign up password
-                      Navigator.of(context).pushNamed(
-                          AppRoutes.registerRouteName);
+                      Navigator.of(context).pop();
                     },
                     child: Text(
-                      AppLocalizations.of(context)!.sign_up,
+                      AppLocalizations.of(context)!.login,
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: Theme.of(context).dividerColor,
@@ -132,7 +140,7 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     Image.asset(AppAssets.googleLogo),
                     Text(
-                      AppLocalizations.of(context)!.login_with_Google,
+                      AppLocalizations.of(context)!.sign_up_google,
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ],
