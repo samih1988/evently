@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.bgLightMode,
-    focusColor: AppColors.white,
+    focusColor: AppColors.lightGrey,
     iconTheme: IconThemeData(color: AppColors.mainColor),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.white,

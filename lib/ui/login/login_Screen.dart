@@ -8,8 +8,11 @@ import 'package:evently/utils/app_utilz.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+  LoginScreen({super.key});
 
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var height = context.height;
@@ -19,133 +22,220 @@ class LoginScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: width * .04),
         child: Form(
-          child: Column(
-            crossAxisAlignment: .stretch,
-            spacing: height * .02,
-            children: [
-              Image.asset(AppAssets.onBoardLogo),
-              Text(
-                AppLocalizations.of(context)!.login_account,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-              // email textField form
-              CustomTextFormField(
-                borderColor: Theme.of(context).highlightColor,
-                hinttext: AppLocalizations.of(context)!.enter_mail,
-                hintstyle: Theme.of(context).textTheme.bodyLarge,
-                prefixIcon: Icon(
-                  Icons.email_outlined,
-                  color: AppColors.lightGrey,
+          key: formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: .stretch,
+              spacing: height * .02,
+              children: [
+                Image.asset(AppAssets.onBoardLogo),
+                Text(
+                  AppLocalizations.of(context)!.login_account,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .headlineSmall,
                 ),
-              ),
-              // password textField form
-              CustomTextFormField(
-                style: Theme.of(context).textTheme.bodySmall,
-                borderColor: Theme.of(context).highlightColor,
-                hinttext: AppLocalizations.of(context)!.enter_password,
-                hintstyle: Theme.of(context).textTheme.bodyLarge,
-                prefixIcon: Icon(
-                  Icons.lock_open_outlined,
-                  color: AppColors.lightGrey,
-                ),
-                sufixIcon: Icon(
-                  Icons.visibility_off_outlined,
-                  color: AppColors.lightGrey,
-                ),
-              ),
-              // forget Password
-              Container(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {
-                    // navigte to reset password
+                // email textField form
+                CustomTextFormField(
+                  keyboradtype: TextInputType.emailAddress,
+                  borderColor: Theme
+                      .of(context)
+                      .highlightColor,
+                  hinttext: AppLocalizations.of(context)!.enter_mail,
+                  hintstyle: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyLarge,
+                  prefixIcon: Icon(
+                    Icons.email_outlined,
+                    color: AppColors.lightGrey,
+                  ),
+                  controller: emailController,
+                  validator: (text) {
+                    if (text == null || text
+                        .trim()
+                        .isEmpty) {
+                      return "Please enter an email";
+                    }
+                    final bool emailValid =
+                    RegExp(
+                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                        .hasMatch(text);
+                    if (!emailValid) {
+                      return "Please enter a valid email";
+                    }
+                    return null;
                   },
-                  child: Text(
-                    '${AppLocalizations.of(context)!.forget_password} ?',
-                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: Theme.of(context).dividerColor,
-                    ),
-                  ),
+
                 ),
-              ),
-              // login button
-              ElevatedButtonReuse(
-                ChildType: Text(
-                  AppLocalizations.of(context)!.login,
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
-                onpressed: () {},
-              ),
-              // sign up
-              Row(
-                mainAxisAlignment: .center,
-                children: [
-                  Text(
-                    ' ${AppLocalizations.of(context)!.dont_have_account} ',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                // password textField form
+                CustomTextFormField(
+                  keyboradtype: TextInputType.phone,
+                  style: Theme
+                      .of(context)
+                      .textTheme
+                      .bodySmall,
+                  borderColor: Theme
+                      .of(context)
+                      .highlightColor,
+                  hinttext: AppLocalizations.of(context)!.enter_password,
+                  hintstyle: Theme
+                      .of(context)
+                      .textTheme
+                      .bodyLarge,
+                  prefixIcon: Icon(
+                    Icons.lock_open_outlined,
+                    color: AppColors.lightGrey,
                   ),
-                  TextButton(
+                  sufixIcon: Icon(
+                    Icons.visibility_off_outlined,
+                    color: AppColors.lightGrey,
+                  ),
+                  controller: passwordController,
+                  validator: (text) {
+                    if (text == null || text
+                        .trim()
+                        .isEmpty) {
+                      return "Please enter an password";
+                    }
+                    if (text.length < 6) {
+                      return " password must more than 6 numbers";
+                    }
+                    return null;
+                  },
+                ),
+                // forget Password
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
                     onPressed: () {
-                      // navigte to sign up password
-                      Navigator.of(context).pushNamed(
-                          AppRoutes.registerRouteName);
+                      // navigte to reset password
                     },
                     child: Text(
-                      AppLocalizations.of(context)!.sign_up,
-                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                      '${AppLocalizations.of(context)!.forget_password} ?',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .labelLarge
+                          ?.copyWith(
                         decoration: TextDecoration.underline,
-                        decorationColor: Theme.of(context).dividerColor,
+                        decorationColor: Theme
+                            .of(context)
+                            .dividerColor,
                       ),
                     ),
                   ),
-                ],
-              ),
-              //or
-              Row(
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: Theme.of(context).focusColor,
-                      indent: width * .02,
-                      endIndent: width * .04,
-                    ),
+                ),
+                // login button
+                ElevatedButtonReuse(
+                  ChildType: Text(
+                    AppLocalizations.of(context)!.login,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .displayLarge,
                   ),
-                  Text(
-                    AppLocalizations.of(context)!.or,
-                    style: Theme.of(context).textTheme.labelLarge,
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: Theme.of(context).focusColor,
-                      indent: width * .04,
-                      endIndent: width * .02,
-                    ),
-                  ),
-                ],
-              ),
-              // login with google
-              ElevatedButtonReuse(
-                ChildType: Row(
-                  spacing: width * .04,
+                  onpressed: login,
+                ),
+                // sign up
+                Row(
                   mainAxisAlignment: .center,
                   children: [
-                    Image.asset(AppAssets.googleLogo),
                     Text(
-                      AppLocalizations.of(context)!.login_with_Google,
-                      style: Theme.of(context).textTheme.titleSmall,
+                      ' ${AppLocalizations.of(context)!.dont_have_account} ',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyLarge,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        // navigte to sign up password
+                        Navigator.of(context).pushNamed(
+                            AppRoutes.registerRouteName);
+                      },
+                      child: Text(
+                        AppLocalizations.of(context)!.sign_up,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .labelLarge
+                            ?.copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: Theme
+                              .of(context)
+                              .dividerColor,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                onpressed: () {},
-                background: Theme.of(
-                  context,
-                ).bottomNavigationBarTheme.backgroundColor,
-              ),
-            ],
+                //or
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Theme
+                            .of(context)
+                            .focusColor,
+                        indent: width * .02,
+                        endIndent: width * .04,
+                      ),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.or,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .labelLarge,
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: Theme
+                            .of(context)
+                            .focusColor,
+                        indent: width * .04,
+                        endIndent: width * .02,
+                      ),
+                    ),
+                  ],
+                ),
+                // login with google
+                ElevatedButtonReuse(
+                  ChildType: Row(
+                    spacing: width * .04,
+                    mainAxisAlignment: .center,
+                    children: [
+                      Image.asset(AppAssets.googleLogo),
+                      Text(
+                        AppLocalizations.of(context)!.login_with_Google,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleSmall,
+                      ),
+                    ],
+                  ),
+                  onpressed: () {},
+                  background: Theme
+                      .of(
+                    context,
+                  )
+                      .bottomNavigationBarTheme
+                      .backgroundColor,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  void login() {
+    if (formKey.currentState!.validate() == true) {
+
+    }
   }
 }
