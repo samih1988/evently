@@ -28,5 +28,7 @@
 "confirm_password":"تاكيد كلمة السر",
 "alreay_account":"لدى حساب بالفعل ؟",
 "sign_up_google":"التسجيل بحساب جوجل",
-"reset_password":"اعادة ظبط كلمة السر"
+"reset_password":"اعادة ظبط كلمة السر",
+"search_for_event":"البحث فى الاحداث"
+
 }

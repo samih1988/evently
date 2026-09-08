@@ -5,4 +5,6 @@ class AppAssets {
   static const String intro3 = "assets/images/intro_3.png";
   static const String onBoardLogo = "assets/images/onboardlogo.png";
   static const String googleLogo = "assets/images/google.png";
+  static const String birthdayDark = "assets/images/birthdayDark.png";
+  static const String birthdayLight = "assets/images/birthdayLight.png";
 }
