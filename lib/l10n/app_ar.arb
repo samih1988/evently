@@ -29,6 +29,15 @@
 "alreay_account":"لدى حساب بالفعل ؟",
 "sign_up_google":"التسجيل بحساب جوجل",
 "reset_password":"اعادة ظبط كلمة السر",
-"search_for_event":"البحث فى الاحداث"
+"search_for_event":"البحث فى الاحداث",
+"welcome_back":" ✨ مرحبا بعودتك ",
+"en":"AR",
+"all":"الكل",
+"sport":"رياضة",
+"birthday":"عيدميلاد",
+"meeting":"مقابلة",
+"book_club":"نادى الكتب",
+"exhibtion":"استثناء"
+
 
 }

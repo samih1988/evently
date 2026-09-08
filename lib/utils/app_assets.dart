@@ -7,4 +7,5 @@ class AppAssets {
   static const String googleLogo = "assets/images/google.png";
   static const String birthdayDark = "assets/images/birthdayDark.png";
   static const String birthdayLight = "assets/images/birthdayLight.png";
+  static const String welcomeBack = "assets/images/welcomeBack.png";
 }

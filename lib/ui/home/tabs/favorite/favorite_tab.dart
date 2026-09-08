@@ -19,7 +19,6 @@ class FavoriteTab extends StatelessWidget {
           spacing: height * .02,
           children: [
             CustomTextFormField(
-              keyboradtype: TextInputType.emailAddress,
               borderColor: Theme
                   .of(context)
                   .highlightColor,
@@ -33,6 +32,7 @@ class FavoriteTab extends StatelessWidget {
                 color: Theme
                     .of(context)
                     .cardColor,
+                size: 35,
               ),
 
             ),

@@ -31,6 +31,14 @@
 "sign_up_google":"Sign up with Google",
 "forget_password":"Forget Password",
 "reset_password":"Reset password",
-"search_for_event":"Search for event"
+"search_for_event":"Search for event",
+"welcome_back":"Welcome Back ✨",
+"en":"EN",
+"all":"All",
+"sport":"Sport",
+"birthday":"Birthday",
+"meeting":"Meeting",
+"book_club":"Book Club",
+"exhibtion":"Exhibtion"
 
 }

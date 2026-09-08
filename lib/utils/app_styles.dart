@@ -68,6 +68,11 @@ class AppStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.mainColor,
   );
+  static TextStyle medium16mainLightColor = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: AppColors.mainLightColor,
+  );
   static TextStyle medium18mainColor = GoogleFonts.poppins(
     fontSize: 18,
     fontWeight: FontWeight.w500,

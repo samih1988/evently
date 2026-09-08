@@ -283,6 +283,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search for event'**
   String get search_for_event;
+
+  /// No description provided for @welcome_back.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome Back ✨'**
+  String get welcome_back;
+
+  /// No description provided for @en.
+  ///
+  /// In en, this message translates to:
+  /// **'EN'**
+  String get en;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @sport.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport'**
+  String get sport;
+
+  /// No description provided for @birthday.
+  ///
+  /// In en, this message translates to:
+  /// **'Birthday'**
+  String get birthday;
+
+  /// No description provided for @meeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting'**
+  String get meeting;
+
+  /// No description provided for @book_club.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Club'**
+  String get book_club;
+
+  /// No description provided for @exhibtion.
+  ///
+  /// In en, this message translates to:
+  /// **'Exhibtion'**
+  String get exhibtion;
 }
 
 class _AppLocalizationsDelegate

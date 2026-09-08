@@ -6,6 +6,7 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.bgLightMode,
     focusColor: AppColors.lightGrey,
+    shadowColor: AppColors.superLightGrey,
     iconTheme: IconThemeData(color: AppColors.mainColor),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: AppColors.white,
@@ -36,13 +37,14 @@ class AppTheme {
       titleMedium: AppStyles.medium20black,
       titleSmall: AppStyles.medium18main,
       displayMedium: AppStyles.semi14maincolor,
-      displayLarge: AppStyles.medium20white,
+      displayLarge: AppStyles.medium20black,
       displaySmall: AppStyles.semi14white,
     ),
   );
   static final ThemeData darkTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.bgDarkMode,
     focusColor: AppColors.mainColor,
+    shadowColor: AppColors.strokeBordekColor,
     iconTheme: IconThemeData(color: AppColors.white),
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -68,7 +70,7 @@ class AppTheme {
       headlineMedium: AppStyles.medium16white,
       bodyLarge: AppStyles.reg14grey,
       headlineSmall: AppStyles.semi24whiteColor,
-      labelMedium: AppStyles.medium16mainColor,
+      labelMedium: AppStyles.medium16mainLightColor,
       labelSmall: AppStyles.medium16mainColor,
       labelLarge: AppStyles.semi14MainLightColor,
       bodyMedium: AppStyles.semi16mainLightColor,

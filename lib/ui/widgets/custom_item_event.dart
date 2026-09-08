@@ -14,11 +14,15 @@ class CustomItemEvent extends StatelessWidget {
     var width = context.width;
     var themeProvider = Provider.of<AppThemeProvider>(context);
     return Container(
-      padding: EdgeInsets.only(top: height * .01, left: height * .01),
-      height: height * .22,
-      decoration: BoxDecoration(
+      padding: EdgeInsets.symmetric(
+        vertical: height * .01,
+        horizontal: height * .01,
+      ),
+      height: height * .25decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Theme.of(context).highlightColor, width: 2),
+        border: Border.all(color: Theme
+            .of(context)
+            .shadowColor, width: 2),
         image: DecorationImage(
           image: AssetImage(
             themeProvider.isDark
@@ -30,6 +34,7 @@ class CustomItemEvent extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: .start,
+        mainAxisAlignment: .spaceBetween,
         children: [
           Container(
             padding: EdgeInsets.symmetric(
@@ -37,15 +42,60 @@ class CustomItemEvent extends StatelessWidget {
               horizontal: height * .01,
             ),
             decoration: BoxDecoration(
+              color: Theme
+                  .of(context)
+                  .scaffoldBackgroundColor,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: Theme.of(context).highlightColor,
+                color: Theme
+                    .of(context)
+                    .shadowColor,
                 width: 2,
               ),
             ),
             child: Text(
               "21 june",
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .labelMedium,
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+
+              horizontal: height * .02,
+            ),
+            decoration: BoxDecoration(
+              color: Theme
+                  .of(context)
+                  .scaffoldBackgroundColor,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: Theme
+                    .of(context)
+                    .shadowColor,
+                width: 2,
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: .spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    "21 june",
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodySmall,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {}, icon: Icon(Icons.favorite_outline,),
+                  color: Theme
+                      .of(context)
+                      .cardColor,)
+              ],
             ),
           ),
         ],

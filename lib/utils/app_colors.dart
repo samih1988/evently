@@ -12,6 +12,7 @@ class AppColors {
   static const Color mainColor = Color(0xff0E3A99);
   static const Color mainLightColor = Color(0xff457AED);
   static const Color mainDarkColor = Color(0xff001440);
+  static const Color strokeBordekColor = Color(0xff002D8F);
   static const Color superLightGrey = Color(0xffF0F0F0);
   static const Color transparentColor = Colors.transparent;
 }

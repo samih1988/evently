@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -101,4 +100,28 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get search_for_event => 'البحث فى الاحداث';
+
+  @override
+  String get welcome_back => ' ✨ مرحبا بعودتك ';
+
+  @override
+  String get en => 'AR';
+
+  @override
+  String get all => 'الكل';
+
+  @override
+  String get sport => 'رياضة';
+
+  @override
+  String get birthday => 'عيدميلاد';
+
+  @override
+  String get meeting => 'مقابلة';
+
+  @override
+  String get book_club => 'نادى الكتب';
+
+  @override
+  String get exhibtion => 'استثناء';
 }
