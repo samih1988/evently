@@ -1,6 +1,7 @@
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/providers/app_language_provider.dart';
 import 'package:evently/providers/app_theme_provider.dart';
+import 'package:evently/sharedPreference/preferences_helper.dart';
 import 'package:evently/ui/home/home_screen.dart';
 import 'package:evently/ui/login/login_Screen.dart';
 import 'package:evently/ui/onboarding/onboarding_tabs.dart';
@@ -12,7 +13,14 @@ import 'package:provider/provider.dart';
 
 import 'ui/introductionScreen/introduction_screen.dart';
 
-void main() {
+void main() async {
+  // خطوة إجبارية لضمان عمل SharedPreferences قبل تشغيل واجهات التطبيق
+  // خطوة إجبارية لضمان عمل الـ SharedPreferences قبل تشغيل الواجهات
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // تهيئة ملف الـ Helper وقراءة البيانات المخزنة فوراً في الذاكرة
+  await PreferencesHelper.init();
+
   runApp(
     MultiProvider(
       providers: [
