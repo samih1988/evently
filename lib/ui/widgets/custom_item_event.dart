@@ -18,7 +18,8 @@ class CustomItemEvent extends StatelessWidget {
         vertical: height * .01,
         horizontal: height * .01,
       ),
-      height: height * .25decoration: BoxDecoration(
+      height: height * .25,
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Theme
             .of(context)
