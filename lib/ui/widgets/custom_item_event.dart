@@ -13,7 +13,8 @@ class CustomItemEvent extends StatelessWidget {
     var height = context.height;
     var width = context.width;
     var themeProvider = Provider.of<AppThemeProvider>(context);
-    return Container(
+    return
+      Container(
       padding: EdgeInsets.symmetric(
         vertical: height * .01,
         horizontal: height * .01,

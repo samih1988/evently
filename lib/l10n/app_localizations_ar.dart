@@ -124,4 +124,31 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get exhibtion => 'استثناء';
+
+  @override
+  String get add_event => 'اضافة حدث';
+
+  @override
+  String get title => 'عنوان';
+
+  @override
+  String get event_title => 'عنوان الحدث';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get event_description => '....... وصف الحدث';
+
+  @override
+  String get event_date => 'تاريخ الحدث';
+
+  @override
+  String get event_time => 'وقت الحدث';
+
+  @override
+  String get choose_date => 'اختار التاريخ';
+
+  @override
+  String get choose_time => 'اختار الوقت';
 }

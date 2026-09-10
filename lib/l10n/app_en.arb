@@ -39,6 +39,14 @@
 "birthday":"Birthday",
 "meeting":"Meeting",
 "book_club":"Book Club",
-"exhibtion":"Exhibtion"
-
+"exhibtion":"Exhibtion",
+"add_event":"Add Event",
+"title":"Title",
+"event_title":"Event Title",
+"description":"Description",
+"event_description":"Event Description....",
+"event_date":"Event Date",
+"event_time":"Event Time",
+"choose_date":"Choose date",
+"choose_time":"Choose time"
 }

@@ -2,6 +2,7 @@ import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/providers/app_language_provider.dart';
 import 'package:evently/providers/app_theme_provider.dart';
 import 'package:evently/sharedPreference/preferences_helper.dart';
+import 'package:evently/ui/home/addEvent/add_event.dart';
 import 'package:evently/ui/home/home_screen.dart';
 import 'package:evently/ui/login/login_Screen.dart';
 import 'package:evently/ui/onboarding/onboarding_tabs.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         AppRoutes.homeRouteName: (context) => HomeScreen(),
         AppRoutes.loginRouteName: (context) => LoginScreen(),
         AppRoutes.registerRouteName: (context) => RegisterScreen(),
+        AppRoutes.addEventRouteName: (context) => AddEvent(),
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

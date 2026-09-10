@@ -37,7 +37,16 @@
 "birthday":"عيدميلاد",
 "meeting":"مقابلة",
 "book_club":"نادى الكتب",
-"exhibtion":"استثناء"
+"exhibtion":"استثناء",
+"add_event":"اضافة حدث",
+"title":"عنوان",
+"event_title":"عنوان الحدث",
+"description":"الوصف",
+"event_description":"....... وصف الحدث",
+"event_date":"تاريخ الحدث",
+"event_time":"وقت الحدث",
+"choose_date":"اختار التاريخ",
+"choose_time":"اختار الوقت"
 
 
 }

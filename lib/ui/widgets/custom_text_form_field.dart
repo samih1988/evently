@@ -21,6 +21,8 @@ class CustomTextFormField extends StatelessWidget {
   bool? obscuretext;
   int? maxline;
   String? obscuringCharacter;
+  bool?fill;
+  Color? filledColor;
 
   CustomTextFormField({
     super.key,
@@ -40,6 +42,8 @@ class CustomTextFormField extends StatelessWidget {
     this.obscuretext,
     this.maxline,
     this.obscuringCharacter,
+    this.fill,
+    this.filledColor
   });
 
   @override
@@ -55,6 +59,8 @@ class CustomTextFormField extends StatelessWidget {
       obscuringCharacter: obscuringCharacter ?? "*",
       maxLines: maxline ?? 1,
       decoration: InputDecoration(
+        filled: fill,
+        fillColor: filledColor,
         enabledBorder: _buildOutlineInputBorder(
           borderColor: borderColor ?? AppColors.transparentColor,
         ),

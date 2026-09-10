@@ -2,6 +2,8 @@ import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/home/tabs/favorite/favorite_tab.dart';
 import 'package:evently/ui/home/tabs/home/home_tab.dart';
 import 'package:evently/ui/home/tabs/profile/profile_tab.dart';
+import 'package:evently/utils/app_assets.dart';
+import 'package:evently/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,7 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed(AppRoutes.addEventRouteName);
+        },
         child: Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
