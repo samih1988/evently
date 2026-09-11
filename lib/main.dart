@@ -9,16 +9,20 @@ import 'package:evently/ui/onboarding/onboarding_tabs.dart';
 import 'package:evently/ui/register/register_Screen.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
 import 'ui/introductionScreen/introduction_screen.dart';
 
 void main() async {
   // خطوة إجبارية لضمان عمل SharedPreferences قبل تشغيل واجهات التطبيق
   // خطوة إجبارية لضمان عمل الـ SharedPreferences قبل تشغيل الواجهات
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   // تهيئة ملف الـ Helper وقراءة البيانات المخزنة فوراً في الذاكرة
   await PreferencesHelper.init();
 
