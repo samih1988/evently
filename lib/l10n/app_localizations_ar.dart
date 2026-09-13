@@ -105,7 +105,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get welcome_back => ' ✨ مرحبا بعودتك ';
 
   @override
-  String get en => 'AR';
+  String get en => 'EN';
 
   @override
   String get all => 'الكل';

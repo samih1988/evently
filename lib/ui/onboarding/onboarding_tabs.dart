@@ -1,7 +1,10 @@
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/login/login_Screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/app_theme_provider.dart';
+import '../../utils/app_assets.dart';
 import '../home/home_screen.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -13,35 +16,9 @@ class OnBoardingPage extends StatefulWidget {
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
   final PageController _pageController = PageController();
-
   int currentPage = 0;
 
-  final List<Map<String, String>> pages = [
-    {
-      'image': 'assets/images/intro_1.png',
-      'title': 'Find Events That Inspire You',
-      'body':
-          'Dive into a world of events crafted to fit \n your unique interests. Whether youre into \n '
-          'live music, art workshops, professional \n'
-          ' networking, or simply discovering new \n'
-          'experiences, we have something for \n'
-          'everyone. Our curated recommendations \n '
-          'will help you explore, connect, and make\n'
-          ' the most of every opportunity around you.',
-    },
-    {
-      'image': 'assets/images/intro_2.png',
-      'title': 'Effortless Event Planning',
-      'body':
-          'Take the hassle out of organizing events with our all-in-one planning tools. From setting up invites and managing RSVPs to scheduling reminders and coordinating details, we’ve got you covered. Plan with ease and focus on what matters – creating an unforgettable experience for you and your guests.',
-    },
-    {
-      'image': 'assets/images/intro_3.png',
-      'title': 'Connect with Friends & Share Moments ',
-      'body':
-          'Make every event memorable by sharing the experience with others. Our platform lets you invite friends, keep everyone in the loop, and celebrate moments together. Capture and share the excitement with your network, so you can relive the highlights and cherish the memories.',
-    },
-  ];
+  List<Map<String, String>> pages = [];
 
   @override
   void dispose() {
@@ -85,6 +62,40 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<AppThemeProvider>(context);
+    pages = [
+      {
+        'image': themeProvider.isDark
+            ? AppAssets.intro_1_dark
+            : AppAssets.intro1,
+        'title': 'Find Events That Inspire You',
+        'body':
+            'Dive into a world of events crafted to fit \n your unique interests. Whether youre into \n '
+            'live music, art workshops, professional \n'
+            ' networking, or simply discovering new \n'
+            'experiences, we have something for \n'
+            'everyone. Our curated recommendations \n '
+            'will help you explore, connect, and make\n'
+            ' the most of every opportunity around you.',
+      },
+      {
+        'image': themeProvider.isDark
+            ? AppAssets.intro_2_dark
+            : AppAssets.intro2,
+        'title': 'Effortless Event Planning',
+        'body':
+            'Take the hassle out of organizing events with our all-in-one planning tools. From setting up invites and managing RSVPs to scheduling reminders and coordinating details, we’ve got you covered. Plan with ease and focus on what matters – creating an unforgettable experience for you and your guests.',
+      },
+      {
+        'image': themeProvider.isDark
+            ? AppAssets.intro_3_dark
+            : AppAssets.intro3,
+        'title': 'Connect with Friends & Share Moments ',
+        'body':
+            'Make every event memorable by sharing the experience with others. Our platform lets you invite friends, keep everyone in the loop, and celebrate moments together. Capture and share the excitement with your network, so you can relive the highlights and cherish the memories.',
+      },
+    ];
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -101,7 +112,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     // Logo في النص
                     Center(
                       child: Image.asset(
-                        'assets/images/intro_logo.png',
+                        themeProvider.isDark
+                            ? AppAssets.intro_logo_dark
+                            : AppAssets.intro_logo,
                         width: 142,
                         height: 27,
                       ),
@@ -184,7 +197,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                           flex: 5,
                           child: Image.asset(
                             pages[index]['image']!,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
+                            width: double.infinity,
+                            height: 343,
                           ),
                         ),
                         // Dots

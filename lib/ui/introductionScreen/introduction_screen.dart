@@ -4,6 +4,7 @@ import 'package:evently/providers/app_theme_provider.dart';
 import 'package:evently/ui/home/home_screen.dart';
 import 'package:evently/ui/introductionScreen/theme_button_widget.dart';
 import 'package:evently/ui/widgets/elevated_button_reuse.dart';
+import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_utilz.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +41,12 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
               crossAxisAlignment: .stretch,
               spacing: height * .02,
               children: [
-                Image.asset("assets/images/intro_logo.png"),
-                Image.asset("assets/images/introduction.png"),
+                Image.asset(
+                    themeProvider.isDark ? AppAssets.intro_logo_dark : AppAssets
+                        .intro_logo),
+                Image.asset(themeProvider.isDark
+                    ? AppAssets.introduction_dark
+                    : AppAssets.introduction),
                 Column(
                   crossAxisAlignment: .start,
                   spacing: height * .02,

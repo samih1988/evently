@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.homeRouteName,
+      initialRoute: AppRoutes.introductionRoutName,
       routes: {
         AppRoutes.introductionRoutName: (context) => IntroductionScreen(),
         AppRoutes.onboardingRouteName: (context) => OnBoardingPage(),

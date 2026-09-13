@@ -105,7 +105,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get welcome_back => 'Welcome Back ✨';
 
   @override
-  String get en => 'EN';
+  String get en => 'AR';
 
   @override
   String get all => 'All';
