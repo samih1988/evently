@@ -1,4 +1,6 @@
+import 'package:evently/fireStore/firebase_utils.dart';
 import 'package:evently/l10n/app_localizations.dart';
+import 'package:evently/model/event.dart';
 import 'package:evently/providers/app_theme_provider.dart';
 import 'package:evently/ui/widgets/custom_add_event_item.dart';
 import 'package:evently/ui/widgets/custom_date_or_time_event.dart';
@@ -12,6 +14,7 @@ import 'package:provider/provider.dart';
 
 import '../../../utils/app_assets.dart';
 import '../../../utils/app_utilz.dart';
+import '../../../utils/toast_utils.dart';
 
 class AddEvent extends StatefulWidget {
   AddEvent({super.key});
@@ -227,6 +230,31 @@ class _AddEventState extends State<AddEvent> {
   }
 
   void addEvent() {
-    if (_fromkey.currentState!.validate() == true) {}
+    if (_fromkey.currentState!.validate() == true) {
+      Event event = Event(
+          eventImage: selectedEventImage,
+          eventName: selectedEventName,
+          eventTitle: title,
+          eventDescription: description,
+          eventDate: DateTime(
+              selectedDate!.year, selectedDate!.month, selectedDate!.day,
+              selectedTime!.hour, selectedTime!.minute)
+      );
+      FirebaseUtils.addEventToFireStore(event).then((value) =>
+          ToastUtils.getFlutterToast(message: "event added successfully",
+              backGroundColor: Theme
+                  .of(context)
+                  .cardColor,
+              textColor: AppColors.white,
+
+              fontSize: 18)
+        ,)
+          .catchError((error) =>
+          ToastUtils.getFlutterToast(message: error.toString(),
+              backGroundColor: AppColors.red,
+              textColor: AppColors.white,
+
+              fontSize: 18),);
+    }
   }
 }
