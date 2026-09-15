@@ -5,14 +5,25 @@ import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_utilz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+import '../../utils/toast_utils.dart';
+
+class LoginScreen extends StatefulWidget {
   LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   var emailController = TextEditingController();
+
   var passwordController = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     var height = context.height;
@@ -233,9 +244,48 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  void login() {
+  void login() async {
     if (formKey.currentState!.validate() == true) {
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text
+        );
+        // التأكد من أن الـ Context ما زال يعمل بعد الـ await
+        // 1. إعادة تحميل بيانات المستخدم من السيرفر
 
+        if (!mounted) return;
+        ToastUtils.getFlutterToast(message: "login successfully",
+            backGroundColor: Theme
+                .of(context)
+                .cardColor,
+            textColor: AppColors.white,
+            gravity: .BOTTOM,
+            fontSize: 18);
+        Navigator.pushReplacementNamed(context, AppRoutes.homeRouteName);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'invalid-credential') {
+          ToastUtils.getFlutterToast(
+              message: 'the email or password is incorrect',
+              backGroundColor: AppColors.red,
+              textColor: AppColors.white,
+              gravity: .BOTTOM,
+              fontSize: 18);
+        } else if (e.code == 'network-request-failed') {
+          ToastUtils.getFlutterToast(message: 'no network',
+              backGroundColor: AppColors.red,
+              textColor: AppColors.white,
+              gravity: .BOTTOM,
+              fontSize: 18);
+        }
+      } catch (e) {
+        ToastUtils.getFlutterToast(message: e.toString(),
+            backGroundColor: AppColors.red,
+            textColor: AppColors.white,
+            gravity: .BOTTOM,
+            fontSize: 18);
+      }
     }
   }
 }

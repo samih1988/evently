@@ -11,7 +11,6 @@ class FavoriteTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var height = context.height;
-    var width = context.width;
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.all(height * .02),

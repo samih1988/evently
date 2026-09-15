@@ -253,7 +253,7 @@ class _AddEventState extends State<AddEvent> {
           ToastUtils.getFlutterToast(message: error.toString(),
               backGroundColor: AppColors.red,
               textColor: AppColors.white,
-
+              gravity: .BOTTOM,
               fontSize: 18),);
     }
   }
