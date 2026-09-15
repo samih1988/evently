@@ -1,15 +1,14 @@
 import 'package:evently/providers/app_language_provider.dart';
 import 'package:evently/providers/app_theme_provider.dart';
 import 'package:evently/ui/widgets/custom_event_tabs.dart';
-import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../../../../utils/app_utilz.dart';
 import '../../../widgets/custom_item_event.dart';
-import '../../../widgets/custom_text_form_field.dart';
 
 class HomeTab extends StatefulWidget {
   HomeTab({super.key});
@@ -23,6 +22,7 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+
     var languageProvider = Provider.of<AppLanguageProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
     List<String> eventNamesList = [
@@ -56,7 +56,7 @@ class _HomeTabState extends State<HomeTab> {
                             .bodyLarge,
                       ),
                       Text(
-                        "Samih  asaad",
+                        'sameh',
                         style: Theme
                             .of(context)
                             .textTheme

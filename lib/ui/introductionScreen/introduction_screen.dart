@@ -1,7 +1,6 @@
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/providers/app_language_provider.dart';
 import 'package:evently/providers/app_theme_provider.dart';
-import 'package:evently/ui/home/home_screen.dart';
 import 'package:evently/ui/introductionScreen/theme_button_widget.dart';
 import 'package:evently/ui/widgets/elevated_button_reuse.dart';
 import 'package:evently/utils/app_assets.dart';

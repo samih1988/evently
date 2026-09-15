@@ -1,19 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/widgets/custom_text_form_field.dart';
 import 'package:evently/ui/widgets/elevated_button_reuse.dart';
 import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_utilz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class RegisterScreen extends StatelessWidget {
+import '../../utils/toast_utils.dart';
+
+class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
 
-  var nameController = TextEditingController();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var rePasswordController = TextEditingController();
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  var nameController = TextEditingController(text: 'samih');
+
+  var emailController = TextEditingController(text: 'samih@asaad.com');
+
+  var passwordController = TextEditingController(text: '12345678');
+
+  var rePasswordController = TextEditingController(text: '12345678');
+
   var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     var height = context.height;
@@ -276,9 +290,45 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  void signUp() {
+  void signUp() async {
     if (formKey.currentState!.validate() == true) {
+      try {
+        final credential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
 
+        ToastUtils.getFlutterToast(message: "register successfully",
+            backGroundColor: Theme
+                .of(context)
+                .cardColor,
+            textColor: AppColors.white,
+            gravity: .BOTTOM,
+            fontSize: 18);
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          ToastUtils.getFlutterToast(
+              message: 'The password provided is too weak',
+              backGroundColor: AppColors.red,
+              textColor: AppColors.white,
+              gravity: .BOTTOM,
+              fontSize: 18);
+        } else if (e.code == 'email-already-in-use') {
+          ToastUtils.getFlutterToast(
+              message: 'he account already exists for that email',
+              backGroundColor: AppColors.red,
+              textColor: AppColors.white,
+              gravity: .BOTTOM,
+              fontSize: 18);
+        }
+      } catch (e) {
+        ToastUtils.getFlutterToast(message: e.toString(),
+            backGroundColor: AppColors.red,
+            textColor: AppColors.white,
+            gravity: .BOTTOM,
+            fontSize: 18);
+      }
     }
   }
 }
