@@ -1,6 +1,7 @@
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/providers/app_language_provider.dart';
 import 'package:evently/providers/app_theme_provider.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/sharedPreference/preferences_helper.dart';
 import 'package:evently/ui/home/addEvent/add_event.dart';
 import 'package:evently/ui/home/home_screen.dart';
@@ -31,6 +32,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
         ChangeNotifierProvider(create: (context) => AppThemeProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: MyApp(),
     ),

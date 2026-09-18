@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently/fireStore/firebase_utils.dart';
 import 'package:evently/providers/app_language_provider.dart';
 import 'package:evently/providers/app_theme_provider.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/ui/widgets/custom_event_tabs.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../../model/event.dart';
 import '../../../../utils/app_utilz.dart';
 import '../../../widgets/custom_item_event.dart';
 
@@ -18,13 +22,37 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  Stream<List<Event>>? _streamEvents;
   int selectedIndex = 0;
+  List<Event> eventsList = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _streamEvents = FirebaseUtils.getAllEvents();
+  }
+
+  void updateStream(int index) {
+    selectedIndex = index;
+    if (selectedIndex == 0) {
+      _streamEvents = FirebaseUtils.getAllEvents();
+    } else {
+      _streamEvents =
+          FirebaseUtils.getFilteredEvents(selectedIndex: selectedIndex);
+    }
+    setState(() {
+
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
-
     var languageProvider = Provider.of<AppLanguageProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
+
     List<String> eventNamesList = [
       AppLocalizations.of(context)!.all,
       AppLocalizations.of(context)!.sport,
@@ -56,7 +84,7 @@ class _HomeTabState extends State<HomeTab> {
                             .bodyLarge,
                       ),
                       Text(
-                        'sameh',
+                        userProvider.myUser!.name,
                         style: Theme
                             .of(context)
                             .textTheme
@@ -65,7 +93,6 @@ class _HomeTabState extends State<HomeTab> {
                     ],
                   ),
                   Row(
-
                     children: [
                       IconButton(
                         onPressed: () {
@@ -94,21 +121,25 @@ class _HomeTabState extends State<HomeTab> {
                           }
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: height * .01,
-                              horizontal: width * .02),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Theme
-                                  .of(context)
-                                  .cardColor
+                          padding: EdgeInsets.symmetric(
+                            vertical: height * .01,
+                            horizontal: width * .02,
                           ),
-                          child: Text(AppLocalizations.of(context)!.en,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Theme
+                                .of(context)
+                                .cardColor,
+                          ),
+                          child: Text(
+                            AppLocalizations.of(context)!.en,
                             style: Theme
                                 .of(context)
                                 .textTheme
-                                .displaySmall,),
+                                .displaySmall,
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
@@ -116,10 +147,7 @@ class _HomeTabState extends State<HomeTab> {
               // tabs
               TabBar(
                 onTap: (index) {
-                  selectedIndex = index;
-                  setState(() {
-
-                  });
+                  updateStream(index);
                 },
                 isScrollable: true,
                 dividerColor: AppColors.transparentColor,
@@ -127,18 +155,64 @@ class _HomeTabState extends State<HomeTab> {
                 labelPadding: EdgeInsets.symmetric(horizontal: width * .02),
                 tabAlignment: TabAlignment.start,
                 tabs: eventNamesList.map((eventName) {
-                  return CustomEventTabs(isselected: selectedIndex ==
-                      eventNamesList.indexOf(eventName), eventName: eventName);
+                  return CustomEventTabs(
+                    isselected:
+                    selectedIndex == eventNamesList.indexOf(eventName),
+                    eventName: eventName,
+                  );
                 }).toList(),
               ),
               Expanded(
-                child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return CustomItemEvent();
+                child: StreamBuilder(
+                  stream: _streamEvents,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          backgroundColor: Theme
+                              .of(context)
+                              .cardColor,
+                        ),
+                      );
+                    }
+                    if (!snapshot.hasData && snapshot.data!.isEmpty) {
+                      return Text(
+                        'no data found',
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headlineMedium,
+                      );
+                    } else {
+                      eventsList = snapshot.data!;
+                      return eventsList.isEmpty
+                          ? Center(
+                        child: Text(
+                          'no data found',
+                          style: Theme
+                              .of(
+                            context,
+                          )
+                              .textTheme
+                              .headlineMedium,
+                        ),
+                      )
+                          : ListView.separated(
+                        itemBuilder: (context, index) {
+                          return CustomItemEvent(
+                            event: eventsList[index],
+                          );
+                        },
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: height * .02),
+                        itemCount: eventsList.length,
+                      );
+                    }
                   },
-                  separatorBuilder: (context, index) =>
-                      SizedBox(height: height * .02),
-                  itemCount: 10,
                 ),
               ),
             ],
@@ -147,4 +221,6 @@ class _HomeTabState extends State<HomeTab> {
       ),
     );
   }
+
+
 }

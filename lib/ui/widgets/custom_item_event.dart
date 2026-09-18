@@ -1,12 +1,18 @@
+import 'package:evently/fireStore/firebase_utils.dart';
+import 'package:evently/model/event.dart';
 import 'package:evently/providers/app_theme_provider.dart';
-import 'package:evently/utils/app_assets.dart';
+import 'package:evently/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../utils/app_colors.dart';
 import '../../utils/app_utilz.dart';
 
 class CustomItemEvent extends StatelessWidget {
-  CustomItemEvent({super.key});
+  Event event;
+
+  CustomItemEvent({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +32,7 @@ class CustomItemEvent extends StatelessWidget {
             .of(context)
             .shadowColor, width: 2),
         image: DecorationImage(
-          image: AssetImage(
-            themeProvider.isDark
-                ? AppAssets.birthdayDark
-                : AppAssets.birthdayLight,
-          ),
+          image: AssetImage(event.eventImage),
           fit: BoxFit.fill,
         ),
       ),
@@ -56,7 +58,7 @@ class CustomItemEvent extends StatelessWidget {
               ),
             ),
             child: Text(
-              "21 june",
+              DateFormat('dd MMM').format(event.eventDate).toString(),
               style: Theme
                   .of(context)
                   .textTheme
@@ -85,16 +87,38 @@ class CustomItemEvent extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    "21 june",
+                    event.eventTitle,
                     style: Theme
                         .of(context)
                         .textTheme
                         .bodySmall,
                   ),
                 ),
-                IconButton(
-                  onPressed: () {}, icon: Icon(Icons.favorite_outline,),
-                  color: Theme
+                IconButton(nPressed: () {
+                    FirebaseUtils.updateIsFavourite(event)
+                        .then((value) {
+                          return ToastUtils.getFlutterToast(
+                            message: "updated successfully",
+                            backGroundColor: AppColors.lightGreen,
+                            textColor: AppColors.white,
+                            gravity: .BOTTOM,
+                            fontSize: 18,
+                          );
+                        })
+                        .catchError((err) {
+                          return ToastUtils.getFlutterToast(
+                            message: err.toString(),
+                            backGroundColor: AppColors.red,
+                            textColor: AppColors.white,
+                            gravity: .BOTTOM,
+                            fontSize: 18,
+                          );
+                        });
+                  },
+                  icon: event.isFavorite
+                      ? Icon(Icons.favorite)
+                      : Icon(Icons.favorite_outline),
+                  ccolor: Theme
                       .of(context)
                       .cardColor,)
               ],
