@@ -5,6 +5,7 @@ class Event {
   String id;
   String eventImage;
   String eventName;
+  int eventCatIndex;
   String eventTitle;
   String eventDescription;
   DateTime eventDate;
@@ -14,6 +15,7 @@ class Event {
     this.id = '',
     required this.eventImage,
     required this.eventName,
+    required this.eventCatIndex,
     required this.eventTitle,
     required this.eventDescription,
     required this.eventDate,
@@ -26,6 +28,7 @@ class Event {
         id: data['id'],
         eventImage: data['event_image'],
         eventName: data['event_name'],
+        eventCatIndex: data['event_cat_index'],
         eventTitle: data['event_title'],
         eventDescription: data['event_description'],
         eventDate: (data['event_date'] as Timestamp).toDate(),
@@ -38,6 +41,7 @@ class Event {
       "id": id,
       "event_image": eventImage,
       "event_name": eventName,
+      "event_cat_index": eventCatIndex,
       "event_title": eventTitle,
       "event_description": eventDescription,
       "event_date": eventDate,

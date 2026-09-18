@@ -1,3 +1,4 @@
+import 'package:evently/fireStore/firebase_utils.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/widgets/custom_text_form_field.dart';
 import 'package:evently/ui/widgets/elevated_button_reuse.dart';
@@ -7,7 +8,9 @@ import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_utilz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/user_provider.dart';
 import '../../utils/toast_utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -23,6 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var passwordController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
+  bool isloading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +144,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 // login button
                 ElevatedButtonReuse(
-                  ChildType: Text(
+                  ChildType: isloading ? CircularProgressIndicator(
+                    backgroundColor: AppColors.lightGreen,
+                  ) : Text(
                     AppLocalizations.of(context)!.login,
                     style: Theme
                         .of(context)
@@ -245,8 +251,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() async {
+
     if (formKey.currentState!.validate() == true) {
       try {
+        isloading = true;
+        setState(() {
+
+        });
         final credential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
             email: emailController.text,
@@ -254,8 +265,14 @@ class _LoginScreenState extends State<LoginScreen> {
         );
         // التأكد من أن الـ Context ما زال يعمل بعد الـ await
         // 1. إعادة تحميل بيانات المستخدم من السيرفر
-
+        var user = await FirebaseUtils.getUser(credential.user?.uid ?? "");
+        if (user == null) {
+          return;
+        }
+        var userProvide = Provider.of<UserProvider>(context, listen: false);
+        userProvide.updateMyUser(user);
         if (!mounted) return;
+        isloading = false;
         ToastUtils.getFlutterToast(message: "login successfully",
             backGroundColor: Theme
                 .of(context)
@@ -266,6 +283,8 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacementNamed(context, AppRoutes.homeRouteName);
       } on FirebaseAuthException catch (e) {
         if (e.code == 'invalid-credential') {
+          isloading = false;
+
           ToastUtils.getFlutterToast(
               message: 'the email or password is incorrect',
               backGroundColor: AppColors.red,
@@ -273,6 +292,8 @@ class _LoginScreenState extends State<LoginScreen> {
               gravity: .BOTTOM,
               fontSize: 18);
         } else if (e.code == 'network-request-failed') {
+          isloading = false;
+
           ToastUtils.getFlutterToast(message: 'no network',
               backGroundColor: AppColors.red,
               textColor: AppColors.white,
@@ -286,6 +307,9 @@ class _LoginScreenState extends State<LoginScreen> {
             gravity: .BOTTOM,
             fontSize: 18);
       }
+      setState(() {
+
+      });
     }
   }
 }

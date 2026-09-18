@@ -234,6 +234,7 @@ class _AddEventState extends State<AddEvent> {
       Event event = Event(
           eventImage: selectedEventImage,
           eventName: selectedEventName,
+          eventCatIndex: selectedIndex + 1,
           eventTitle: title,
           eventDescription: description,
           eventDate: DateTime(

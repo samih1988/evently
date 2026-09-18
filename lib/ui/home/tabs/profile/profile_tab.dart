@@ -1,10 +1,13 @@
 import 'package:evently/ui/home/tabs/profile/widgets/profile_user_chosing.dart';
 import 'package:evently/utils/app_colors.dart';
+import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_utilz.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../l10n/app_localizations.dart';
 import '../../../../providers/app_theme_provider.dart';
+import '../../../../providers/user_provider.dart';
 import '../../../../utils/app_assets.dart';
 import 'language_bottom_sheet.dart';
 
@@ -19,6 +22,7 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   Widget build(BuildContext context) {
     var themProvider = Provider.of<AppThemeProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
     var height = context.height;
     var width = context.width;
     return SafeArea(
@@ -36,11 +40,11 @@ class _ProfileTabState extends State<ProfileTab> {
               backgroundImage: AssetImage(AppAssets.profileImage),
             ),
             Text(
-              "Samih Asaad",
+              userProvider.myUser!.name,
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             Text(
-              "samihasaad65@gmail.com",
+              userProvider.myUser!.email,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
             ProfileUserChosing(
@@ -84,7 +88,10 @@ class _ProfileTabState extends State<ProfileTab> {
 
             ProfileUserChosing(
               textName: AppLocalizations.of(context)!.logout,
-              iconName: Icon(Icons.logout_outlined, color: AppColors.red),
+              iconName: InkWell(onTap: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRoutes.loginRouteName, (route) => false,);
+              }, child: Icon(Icons.logout_outlined, color: AppColors.red)),
             ),
           ],
         ),
