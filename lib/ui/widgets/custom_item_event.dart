@@ -93,9 +93,9 @@ class CustomItemEvent extends StatelessWidget {
                         .textTheme
                         .bodySmall,
                   ),
-                ),conButton(
+                ),IconButton(
                   onPressed: () {
-                    FFirebaseUtils.updateIsFavourite(event)
+                    FirebaseUtils.updateIsFavourite(event)
                         .then((value) {
                           return ToastUtils.getFlutterToast(
                             message: "updated successfully",
@@ -117,7 +117,7 @@ class CustomItemEvent extends StatelessWidget {
                   },
                   icon: event.isFavorite
                       ? Icon(Icons.favorite)
-                      : Icon(Icons.favorite_outline),olor: Theme..of(context)
+                      : Icon(Icons.favorite_outline),color: Theme.of(context)
                       .cardColor,)
               ],
             ),
