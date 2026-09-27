@@ -202,17 +202,8 @@ class _HomeTabState extends State<HomeTab> {
                       )
                           : ListView.separated(
                         itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                AppRoutes.eventDetailsRouteName,
-                                arguments: eventsList[index],
-                              );
-                            },
-                            child: CustomItemEvent(
-                              event: eventsList[index],
-                            ),
+                          return CustomItemEvent(
+                            event: eventsList[index],
                           );
                         },
                         separatorBuilder: (context, index) =>
