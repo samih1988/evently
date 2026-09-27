@@ -4,6 +4,8 @@ import 'package:evently/providers/app_theme_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/sharedPreference/preferences_helper.dart';
 import 'package:evently/ui/home/addEvent/add_event.dart';
+import 'package:evently/ui/home/editEvent/edit_event.dart';
+import 'package:evently/ui/home/eventDetails/event_details_screen.dart';
 import 'package:evently/ui/home/home_screen.dart';
 import 'package:evently/ui/login/login_Screen.dart';
 import 'package:evently/ui/onboarding/onboarding_tabs.dart';
@@ -58,6 +60,9 @@ class MyApp extends StatelessWidget {
         AppRoutes.loginRouteName: (context) => LoginScreen(),
         AppRoutes.registerRouteName: (context) => RegisterScreen(),
         AppRoutes.addEventRouteName: (context) => AddEvent(),
+        AppRoutes.eventDetailsRouteName: (
+            context) => const EventDetailsScreen(),
+        AppRoutes.editEventRouteName: (context) => const EditEvent(),
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

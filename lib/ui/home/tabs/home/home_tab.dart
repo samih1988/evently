@@ -1,16 +1,15 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/fireStore/firebase_utils.dart';
+import 'package:evently/model/event.dart';
 import 'package:evently/providers/app_language_provider.dart';
 import 'package:evently/providers/app_theme_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/ui/widgets/custom_event_tabs.dart';
 import 'package:evently/utils/app_colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:evently/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../l10n/app_localizations.dart';
-import '../../../../model/event.dart';
 import '../../../../utils/app_utilz.dart';
 import '../../../widgets/custom_item_event.dart';
 
@@ -203,8 +202,17 @@ class _HomeTabState extends State<HomeTab> {
                       )
                           : ListView.separated(
                         itemBuilder: (context, index) {
-                          return CustomItemEvent(
-                            event: eventsList[index],
+                          return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.eventDetailsRouteName,
+                                arguments: eventsList[index],
+                              );
+                            },
+                            child: CustomItemEvent(
+                              event: eventsList[index],
+                            ),
                           );
                         },
                         separatorBuilder: (context, index) =>

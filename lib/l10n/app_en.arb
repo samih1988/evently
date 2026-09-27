@@ -48,5 +48,15 @@
 "event_date":"Event Date",
 "event_time":"Event Time",
 "choose_date":"Choose date",
-"choose_time":"Choose time"
+"choose_time":"Choose time",
+"event_details":"Event_Details",
+"edit_event":"Edit_Event",
+                         "delete_event":"Delete Event",
+                         "delete_event_confirm":"Are you sure you want to delete this event?",
+                         "cancel":"Cancel",
+                         "delete":"Delete",
+                         "edit":"Edit",
+                         "update_event":"Update Event",
+                         "event_deleted_successfully":"Event deleted successfully",
+                         "event_updated_successfully":"Event updated successfully"
 }

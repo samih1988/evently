@@ -46,7 +46,18 @@
 "event_date":"تاريخ الحدث",
 "event_time":"وقت الحدث",
 "choose_date":"اختار التاريخ",
-"choose_time":"اختار الوقت"
+"choose_time":"اختار الوقت",
+"event_details":"تفاصيل الحدث",
+"edit_event":"تعديل الحدث",
+"delete_event":"حذف الحدث",
+"delete_event_confirm":"هل أنت متأكد من حذف هذا الحدث؟",
+"cancel":"إلغاء",
+"delete":"حذف",
+"edit":"تعديل",
+"update_event":"تحديث الحدث",
+"event_deleted_successfully":"تم حذف الحدث بنجاح",
+"event_updated_successfully":"تم تعديل الحدث بنجاح"
+
 
 
 }

@@ -151,4 +151,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get choose_time => 'اختار الوقت';
+
+  @override
+  String get event_details => 'تفاصيل الحدث';
+
+  @override
+  String get edit_event => 'تعديل الحدث';
+
+  @override
+  String get delete_event => 'حذف الحدث';
+
+  @override
+  String get delete_event_confirm => 'هل أنت متأكد من حذف هذا الحدث؟';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get edit => 'تعديل';
+
+  @override
+  String get update_event => 'تحديث الحدث';
+
+  @override
+  String get event_deleted_successfully => 'تم حذف الحدث بنجاح';
+
+  @override
+  String get event_updated_successfully => 'تم تعديل الحدث بنجاح';
 }
