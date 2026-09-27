@@ -2,15 +2,18 @@ import 'package:evently/fireStore/firebase_utils.dart';
 import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/ui/widgets/custom_text_form_field.dart';
 import 'package:evently/ui/widgets/elevated_button_reuse.dart';
-import 'package:evently/utils/app_assets.dart';
 import 'package:evently/utils/app_colors.dart';
 import 'package:evently/utils/app_routes.dart';
 import 'package:evently/utils/app_utilz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/my_user.dart';
 import '../../providers/user_provider.dart';
+import '../../utils/app_assets.dart';
 import '../../utils/toast_utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -40,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
           key: formKey,
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: .stretch,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               spacing: height * .02,
               children: [
                 Image.asset(AppAssets.onBoardLogo),
@@ -73,8 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         .isEmpty) {
                       return "Please enter an email";
                     }
-                    final bool emailValid =
-                    RegExp(
+                    final bool emailValid = RegExp(
                         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                         .hasMatch(text);
                     if (!emailValid) {
@@ -82,11 +84,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return null;
                   },
-
                 ),
                 // password textField form
                 CustomTextFormField(
-                  keyboradtype: TextInputType.phone,
+                  keyboradtype: TextInputType.visiblePassword,
+                  obscuretext: true,
                   style: Theme
                       .of(context)
                       .textTheme
@@ -144,9 +146,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 // login button
                 ElevatedButtonReuse(
-                  ChildType: isloading ? CircularProgressIndicator(
+                  ChildType: isloading
+                      ? CircularProgressIndicator(
                     backgroundColor: AppColors.lightGreen,
-                  ) : Text(
+                  )
+                      : Text(
                     AppLocalizations.of(context)!.login,
                     style: Theme
                         .of(context)
@@ -157,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 // sign up
                 Row(
-                  mainAxisAlignment: .center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       ' ${AppLocalizations.of(context)!.dont_have_account} ',
@@ -168,9 +172,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                        // navigte to sign up password
-                        Navigator.of(context).pushNamed(
-                            AppRoutes.registerRouteName);
+                        Navigator.of(context)
+                            .pushNamed(AppRoutes.registerRouteName);
                       },
                       child: Text(
                         AppLocalizations.of(context)!.sign_up,
@@ -220,27 +223,27 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 // login with google
                 ElevatedButtonReuse(
-                  ChildType: Row(
-                    spacing: width * .04,
-                    mainAxisAlignment: .center,
-                    children: [
-                      Image.asset(AppAssets.googleLogo),
-                      Text(
-                        AppLocalizations.of(context)!.login_with_Google,
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleSmall,
-                      ),
-                    ],
-                  ),
-                  onpressed: () {},
                   background: Theme
                       .of(
                     context,
                   )
                       .bottomNavigationBarTheme
                       .backgroundColor,
+                  ChildType: Row(
+                    spacing: width * .04,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(AppAssets.googleLogo),
+                      Text(
+                        "Login With Google",
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .displayLarge,
+                      ),
+                    ],
+                  ),
+                  onpressed: loginWithGoogle,
                 ),
               ],
             ),
@@ -250,66 +253,152 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void login() async {
+  void loginWithGoogle() async {
+    try {
+      isloading = true;
+      setState(() {});
 
+      // 1. تهيئة حزمة جوجل للإصدار الجديد
+      await GoogleSignIn.instance.initialize();
+
+      // 2. استخدام authenticate() بدلاً من signIn()
+      final GoogleSignInAccount? googleUser =
+      await GoogleSignIn.instance.authenticate();
+
+      if (googleUser == null) {
+        isloading = false;
+        setState(() {});
+        return;
+      }
+
+      // 3. جلب الـ authentication
+      final GoogleSignInAuthentication googleAuth =
+      await googleUser.authentication;
+
+      // 4. إنشاء الـ Credential بـ idToken فقط للفايربيز
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+
+      // 5. تسجيل الدخول في الفايربيز
+      UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      User? firebaseUser = userCredential.user;
+
+      if (firebaseUser != null) {
+        MyUser? myUser = await FirebaseUtils.getUser(firebaseUser.uid);
+
+        if (myUser == null) {
+          myUser = MyUser(
+            id: firebaseUser.uid,
+            name: firebaseUser.displayName ?? "No Name",
+            email: firebaseUser.email ?? "",
+          );
+          await FirebaseUtils.addUserTOFireStore(myUser);
+        }
+
+        if (!mounted) return;
+        var userProvide = Provider.of<UserProvider>(context, listen: false);
+        userProvide.updateMyUser(myUser);
+
+        isloading = false;
+        setState(() {});
+
+        ToastUtils.getFlutterToast(
+          message: "login successfully",
+          backGroundColor: Theme
+              .of(context)
+              .cardColor,
+          textColor: AppColors.white,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 18,
+        );
+
+        Navigator.of(context).pushReplacementNamed(AppRoutes.homeRouteName);
+      }
+    } catch (e) {
+      isloading = false;
+      setState(() {});
+      print("Google Sign In Error: $e");
+      ToastUtils.getFlutterToast(
+        message: e.toString(),
+        backGroundColor: AppColors.red,
+        textColor: AppColors.white,
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 18,
+      );
+    }
+  }
+
+  void login() async {
     if (formKey.currentState!.validate() == true) {
       try {
         isloading = true;
-        setState(() {
+        setState(() {});
 
-        });
         final credential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
             email: emailController.text,
-            password: passwordController.text
-        );
-        // التأكد من أن الـ Context ما زال يعمل بعد الـ await
-        // 1. إعادة تحميل بيانات المستخدم من السيرفر
+            password: passwordController.text);
+
         var user = await FirebaseUtils.getUser(credential.user?.uid ?? "");
         if (user == null) {
+          isloading = false;
+          setState(() {});
           return;
         }
+
+        if (!mounted) return;
         var userProvide = Provider.of<UserProvider>(context, listen: false);
         userProvide.updateMyUser(user);
-        if (!mounted) return;
+
         isloading = false;
-        ToastUtils.getFlutterToast(message: "login successfully",
-            backGroundColor: Theme
-                .of(context)
-                .cardColor,
-            textColor: AppColors.white,
-            gravity: .BOTTOM,
-            fontSize: 18);
+        setState(() {});
+
+        ToastUtils.getFlutterToast(
+          message: "login successfully",
+          backGroundColor: Theme
+              .of(context)
+              .cardColor,
+          textColor: AppColors.white,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 18,
+        );
+
         Navigator.pushReplacementNamed(context, AppRoutes.homeRouteName);
       } on FirebaseAuthException catch (e) {
+        isloading = false;
+        setState(() {});
+
         if (e.code == 'invalid-credential') {
-          isloading = false;
-
           ToastUtils.getFlutterToast(
-              message: 'the email or password is incorrect',
-              backGroundColor: AppColors.red,
-              textColor: AppColors.white,
-              gravity: .BOTTOM,
-              fontSize: 18);
-        } else if (e.code == 'network-request-failed') {
-          isloading = false;
-
-          ToastUtils.getFlutterToast(message: 'no network',
-              backGroundColor: AppColors.red,
-              textColor: AppColors.white,
-              gravity: .BOTTOM,
-              fontSize: 18);
-        }
-      } catch (e) {
-        ToastUtils.getFlutterToast(message: e.toString(),
+            message: 'the email or password is incorrect',
             backGroundColor: AppColors.red,
             textColor: AppColors.white,
-            gravity: .BOTTOM,
-            fontSize: 18);
-      }
-      setState(() {
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 18,
+          );
+        } else if (e.code == 'network-request-failed') {
+          ToastUtils.getFlutterToast(
+            message: 'no network',
+            backGroundColor: AppColors.red,
+            textColor: AppColors.white,
+            gravity: ToastGravity.BOTTOM,
+            fontSize: 18,
+          );
+        }
+      } catch (e) {
+        isloading = false;
+        setState(() {});
 
-      });
+        ToastUtils.getFlutterToast(
+          message: e.toString(),
+          backGroundColor: AppColors.red,
+          textColor: AppColors.white,
+          gravity: ToastGravity.BOTTOM,
+          fontSize: 18,
+        );
+      }
     }
   }
 }
