@@ -8,10 +8,10 @@ class FirebaseUtils {
     return FirebaseFirestore.instance
         .collection(Event.collectionName)
         .withConverter<Event>(
-          fromFirestore: (snapshot, options) =>
-              Event.fromJson(snapshot.data()!),
-          toFirestore: (event, options) => event.toJson(),
-        );
+      fromFirestore: (snapshot, options) =>
+          Event.fromJson(snapshot.data()!),
+      toFirestore: (event, options) => event.toJson(),
+    );
   }
 
   static Future<void> addEventToFireStore(Event event) {
@@ -46,6 +46,14 @@ class FirebaseUtils {
     return getEventCollection().doc(event.id).update({
       "is_favorite": !event.isFavorite
     });
+  }
+
+  static Future<void> deleteEvent(String eventId) {
+    return getEventCollection().doc(eventId).delete();
+  }
+
+  static Future<void> updateEvent(Event event) {
+    return getEventCollection().doc(event.id).set(event);
   }
 
   static Stream<List<Event>> getAllIsFavourite() {

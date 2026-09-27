@@ -385,6 +385,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose time'**
   String get choose_time;
+
+  /// No description provided for @event_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Event_Details'**
+  String get event_details;
+
+  /// No description provided for @edit_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit_Event'**
+  String get edit_event;
+
+  /// No description provided for @delete_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Event'**
+  String get delete_event;
+
+  /// No description provided for @delete_event_confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this event?'**
+  String get delete_event_confirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @update_event.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Event'**
+  String get update_event;
+
+  /// No description provided for @event_deleted_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Event deleted successfully'**
+  String get event_deleted_successfully;
+
+  /// No description provided for @event_updated_successfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Event updated successfully'**
+  String get event_updated_successfully;
 }
 
 class _AppLocalizationsDelegate

@@ -5,4 +5,6 @@ class AppRoutes {
   static const String loginRouteName = "loginPage";
   static const String registerRouteName = "registerPage";
   static const String addEventRouteName = "addEventPage";
+  static const String eventDetailsRouteName = "eventDetailsPage";
+  static const String editEventRouteName = "editEventPage";
 }
